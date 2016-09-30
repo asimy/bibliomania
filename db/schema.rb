@@ -17,13 +17,15 @@ ActiveRecord::Schema.define(version: 20160929032204) do
   enable_extension "plpgsql"
 
   create_table "books", force: :cascade do |t|
+    t.string   "google_book_id"
+    t.string   "thumbnail_link"
     t.string   "title"
-    t.string   "author_first_name"
-    t.string   "author_last_name"
+    t.string   "subtitle"
+    t.string   "authors"
     t.text     "description"
-    t.integer  "favorited_count",   default: 0
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "favorited_count", default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
 end
