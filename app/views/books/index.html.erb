@@ -1,23 +1,27 @@
-<section id="book_search_form" width="80%">
-  <h2>Book Seach</h2>
-  <p>Enter your search term</p>
-  <%= form_tag books_search_path, method: :get do%>
-    <div>Search for:<%=text_field_tag 'book[search_term]', params[:search] %></div>
-    <div><%= submit_tag 'Show me the books', name: nil %></div>
-  <%end%>
+<div id="content">
+  <div id="mainContent">
+    <section id="book_search_form">
+      <h2>Book Seach</h2>
+      <p>Enter your search term</p>
+      <%= form_tag books_search_path, method: :get do%>
+        <div>Search for:<%=text_field_tag 'book[search_term]', (params[:book] ? params[:book][:search_term] : '') %><%= submit_tag 'Show me the books', name: nil %></div>
+      <%end%>
 
-  <div id="results">
-  <% if @search_page.results
-       @search_page.results.each do |gbook| %>
-          <%= render partial: "book_favoriting_form", locals: {gbook: gbook} %>
-  <%     end
-     end
-  %>
+
+    </section>
+
+    <section id="results">
+      <% if @search_page && @search_page.results %>
+        <table border="1">
+         <tr><th>Favorite?</th><th colspan="2">Book</th></tr>
+         <%  @search_page.results.each do |gbook| %>
+              <%= render partial: "book_favoriting_form", locals: {gbook: gbook} %>
+        <% end %>
+        </table>
+      <% end %>
+    </section>
   </div>
-
-</section>
-<section id="favorite_books">
-<section>
-<aside id="top_favorites" style="float:right">
-PLaceholder
-</aside>
+  <aside id="top_favorites">
+    <%= render partial: "favorited_books" %>
+  </aside>
+</div>

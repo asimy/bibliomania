@@ -1,8 +1,19 @@
-
-<div>
-
-<%= form_tag books_update_path do %>
-<img src=<%= gbook[:thumbnail_link] %> >
-<div><%= gbook[:description]%></div>
-<% end %>
-</div>
+<tr>
+  <td>
+    <%= form_tag books_update_path, method: :put, remote: true do %>
+      <%= hidden_field_tag "book[thumbnail_link]", gbook[:thumbnail_link] %>
+      <%= hidden_field_tag "book[title]", gbook[:title] %>
+      <%= hidden_field_tag "book[authors]", gbook[:authors] %>
+      <%= hidden_field_tag "book[subtitle]", gbook[:subtitle] %>
+      <%= submit_tag 'Favorite' %>
+    <% end %>
+  </td>
+  <td>
+    <img src=<%= gbook[:thumbnail_link] %> >
+  </td>
+  <td>
+    <div>Title: <%= gbook[:title] %> </div>
+    <div><%= gbook[:authors].include?(',') ? "Authors" : "Author" %>: <%= gbook[:authors] %> </div
+    <div><%= gbook[:description]%></div>
+  </td>
+</tr>
