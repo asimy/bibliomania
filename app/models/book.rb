@@ -21,12 +21,16 @@ require 'ruby_dig'
 class Book < ActiveRecord::Base
 
   GOOGLE_BOOKS_SEARCH_API_ENDPOINT = 'https://www.googleapis.com/books/v1/volumes?q='
+  BOOK_SEARCH_DEFAULT_MAX_RESULTS = 5
+  BOOK_SEARCH_DEFAULT_START_INDEX = 0
 
-  def self.search(term, start_index = 0, max_results = 10)
+  self.per_page = 5
+
+  def self.search(term, start_index = BOOK_SEARCH_DEFAULT_START_INDEX, max_results = BOOK_SEARCH_DEFAULT_MAX_RESULTS)
     return SearchPage.new("Please enter term") if term.blank?
 
     sanitized_term = URI.escape(term.gsub(/[?& ]/,'+'))
-    search_result = RestClient.get "#{GOOGLE_BOOKS_SEARCH_API_ENDPOINT}#{sanitized_term}&startIndex=#{start_index}&maxResults=#{maxResults}}"
+    search_result = RestClient.get "#{GOOGLE_BOOKS_SEARCH_API_ENDPOINT}#{sanitized_term}&startIndex=#{start_index}&maxResults=#{max_results}"
 
     return SearchPage.new("An error occurred while trying to search Google Books (code: #{search_result.code})") unless search_result.code == 200
 
@@ -50,7 +54,7 @@ class Book < ActiveRecord::Base
                                         thumbnail_link: thumbnail(book_record),
                                         title: book_record.dig("volumeInfo","title"),
                                         subtitle: book_record.dig("volumeInfo","subtitle").to_s,
-                                        authors: book_record.dig("volumeInfo","authors").join(', ').to_s,
+                                        authors: Array(book_record.dig("volumeInfo","authors")).to_sentence,
                                         description: book_record.dig("volumeInfo","description").to_s
                                       }}
     sp.start_index = start_index
@@ -63,4 +67,5 @@ class Book < ActiveRecord::Base
     book_record.dig("volumeInfo", "imageLinks", "smallThumbnail") ||
     '/assets/book_placeholder.png'
   end
+
 end

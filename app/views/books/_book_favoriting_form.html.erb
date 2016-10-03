@@ -13,7 +13,9 @@
   </td>
   <td>
     <div>Title: <%= gbook[:title] %> </div>
-    <div><%= gbook[:authors].include?(',') ? "Authors" : "Author" %>: <%= gbook[:authors] %> </div
+    <% if gbook[:authors].present? %>
+      <div><%= (gbook[:authors].include?(',') || gbook[:authors].include?(' and ')) ? "Authors" : "Author" %>: <%= gbook[:authors] %> </div>
+    <% end %>
     <div><%= gbook[:description]%></div>
   </td>
 </tr>

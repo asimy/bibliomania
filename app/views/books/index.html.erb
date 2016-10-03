@@ -1,27 +1,26 @@
 <div id="content">
   <div id="mainContent">
-    <section id="book_search_form">
-      <h2>Book Seach</h2>
+    <section id="book_search">
+      <h2>Book Search</h2>
       <p>Enter your search term</p>
-      <%= form_tag books_search_path, method: :get do%>
-        <div>Search for:<%=text_field_tag 'book[search_term]', (params[:book] ? params[:book][:search_term] : '') %><%= submit_tag 'Show me the books', name: nil %></div>
+      <%= form_tag books_search_path, method: :get, id: "book_search_form", remote: true do%>
+        <%= hidden_field_tag('start_index', Book::BOOK_SEARCH_DEFAULT_START_INDEX) %>
+        <%= hidden_field_tag('max_results', Book::BOOK_SEARCH_DEFAULT_MAX_RESULTS) %>
+        <div>Search for:<%=text_field_tag 'book[search_term]', (params[:book] ? params[:book][:search_term] : '') %>
+        <%= submit_tag 'Show me the books', name: nil %></div>
       <%end%>
 
 
     </section>
 
     <section id="results">
-      <% if @search_page && @search_page.results %>
-        <table border="1">
-         <tr><th>Favorite?</th><th colspan="2">Book</th></tr>
-         <%  @search_page.results.each do |gbook| %>
-              <%= render partial: "book_favoriting_form", locals: {gbook: gbook} %>
-        <% end %>
-        </table>
-      <% end %>
+      <%= render partial: "search_results"%>
     </section>
   </div>
-  <aside id="top_favorites">
-    <%= render partial: "favorited_books" %>
+  <aside>
+  <h2>All time favorite books</h2>
+    <div  id="top_favorites">
+      <%= render partial: "top_favorites" %>
+    </div>
   </aside>
 </div>

@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
   def search
-    @search_page = Book.search(book_params[:search_term])
+    start_index = params[:start_index] || Book::BOOK_SEARCH_DEFAULT_START_INDEX
+    max_results = params[:max_results] || Book::BOOK_SEARCH_DEFAULT_MAX_RESULTS
+    @search_page = Book.search(book_params[:search_term], start_index, max_results)
 
     @favorited_collection = favorited(params[:page])
 
