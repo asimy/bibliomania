@@ -1,4 +1,5 @@
 <% if @favorited_collection %>
+  <%= will_paginate @favorited_collection %>
   <% @favorited_collection.each do |book| %>
     <%=render partial: 'book_item', locals: {book: book}%>
   <% end %>

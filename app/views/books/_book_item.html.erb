@@ -1,1 +1,9 @@
-<div><span><img src='<%= book[:thumbnail_link] %>'></img></span><span>Chosen as a favorite book <%=book.favorited_count%> <%='time'.pluralize(book.favorited_count)%></span></div>
+<div>
+  <figure>
+    <img src='<%= book[:thumbnail_link] %>' />
+    <figcaption><%= book.title %></figcaption>
+  </figure>
+  <div>
+    Chosen as a favorite book <%=book.favorited_count%> <%='time'.pluralize(book.favorited_count)%>
+  </span>
+</div>

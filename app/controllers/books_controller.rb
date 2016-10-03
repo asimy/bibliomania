@@ -2,9 +2,13 @@ class BooksController < ApplicationController
   def search
     @search_page = Book.search(book_params[:search_term])
 
-    @favorited_collection = favorited
+    @favorited_collection = favorited(params[:page])
 
-    render :index
+    respond_to do |format|
+      format.html { render :index }
+      format.js   { render :index }
+    end
+
   end
 
   def create
@@ -14,6 +18,7 @@ class BooksController < ApplicationController
   end
 
   def index
+    @favorited_collection = favorited(params[:page])
   end
 
   def update
@@ -21,7 +26,7 @@ class BooksController < ApplicationController
     book.add_favorite
     book.save!
 
-    @favorited_collection = favorited
+    @favorited_collection = favorited(params[:page] || 1)
   end
 
   private
@@ -29,7 +34,7 @@ class BooksController < ApplicationController
     params.require(:book).permit(:search_term, :google_book_id, :thumbnail_link, :title, :authors)
   end
 
-  def favorited
-    Book.all.order('favorited_count desc')
+  def favorited(page = 1)
+    Book.paginate(page: page).order('favorited_count desc')
   end
 end

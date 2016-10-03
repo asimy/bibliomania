@@ -34,6 +34,9 @@ gem 'annotate'
 # Need Hash#dig to make the code cleaner
 gem 'ruby_dig', '~> 0.0.2'
 
+# pagination for favorite list
+gem 'will_paginate', '~> 3.1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
