@@ -24,8 +24,8 @@
     });
   </script>
   <p>Viewing <%=  @search_page.start_index.to_i + 1 %>-<%=  @search_page.start_index.to_i + Book::BOOK_SEARCH_DEFAULT_MAX_RESULTS %> out of <%= @search_page.total_count %></p>
-  <p><button id="previous_page">&lt; Previous</button> <button id="next_page">Next &gt;</button></a>
-  <table border="1">
+  <p><button class='btn' id="previous_page">&lt; Previous</button> <button class='btn' id="next_page">Next &gt;</button></a>
+  <table class="table">
    <tr><th>Favorite?</th><th colspan="2">Book</th></tr>
    <%  @search_page.results.each do |gbook| %>
         <%= render partial: "book_favoriting_form", locals: {gbook: gbook} %>
