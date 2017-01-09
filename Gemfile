@@ -44,6 +44,10 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
+  gem 'factory_girl_rails'
+  gem 'capybara', '~> 2.7', '>= 2.7.1'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver' # https://ftp.mozilla.org/pub/firefox/releases/39.0b7/mac/en-US/
 end
 
 group :development do
