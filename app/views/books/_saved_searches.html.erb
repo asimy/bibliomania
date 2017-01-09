@@ -1,0 +1,8 @@
+<% if SavedSearch.all.any? %>
+<h4>Saved searches:</h4>
+<ul>
+<% SavedSearch.order('created_at desc').first(10).each do |saved_search| %>
+<li><%= link_to saved_search.search_string, "/books/search?utf8=%E2%9C%93&start_index=0&max_results=5&book%5Bsearch_term%5D=#{saved_search.search_string}", remote: true %></li>
+<% end %>
+</ul>
+<% end %>

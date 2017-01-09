@@ -7,16 +7,18 @@
         <%= form_tag books_search_path, method: :get, id: "book_search_form", remote: true do%>
           <%= hidden_field_tag('start_index', Book::BOOK_SEARCH_DEFAULT_START_INDEX) %>
           <%= hidden_field_tag('max_results', Book::BOOK_SEARCH_DEFAULT_MAX_RESULTS) %>
-          <div class="form-group">Search for: <%=text_field_tag 'book[search_term]', (params[:book] ? params[:book][:search_term] : '') %> 
+          <div class="form-group">Search for: <%=text_field_tag 'book[search_term]', (params[:book] ? params[:book][:search_term] : '') %>
           <%= submit_tag 'Show me the books', name: nil, class: 'btn btn-primary' %></div>
-        <%end%>
+        <% end %>
+        <div id='saved_searches'>
+          <%= render partial: 'saved_searches' %>
+        </div>
       </div>
-
-
 
       <section id="results">
         <%= render partial: "search_results"%>
       </section>
+
     </div>
     <aside class='col-sm-4'>
       <h2>All time favorite books</h2>

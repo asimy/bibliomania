@@ -42,7 +42,7 @@ class Book < ActiveRecord::Base
   end
 
   def remove_favorite
-    self.favorited_count = Math.max(0, self.favorite_count - 1)
+    self.favorited_count = [0, self.favorited_count - 1].max
   end
 
   private
